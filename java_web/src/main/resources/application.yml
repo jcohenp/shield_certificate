@@ -6,3 +6,20 @@ jwt:
   expires_in: 300 # 5 minutes
   mobile_expires_in: 600 # 10 minutes
   secret: queenvictoria
+
+# ===============================
+# = H2 data source
+# ===============================
+spring:
+  datasource:
+    url: jdbc:h2:mem:spring-security-hibernate-test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    platform: h2
+    username: sa
+    password:
+
+  # enable H2 web console and set url for web console
+  # http://localhost:8080/console
+  h2:
+    console:
+      enabled: true
+      path: /console

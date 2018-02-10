@@ -46,9 +46,6 @@ public class User implements UserDetails {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "phone_number")
-    private String phoneNumber;
-
     @Column(name = "enabled")
     private boolean enabled;
 
@@ -118,14 +115,6 @@ public class User implements UserDetails {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
     }
 
     @Override

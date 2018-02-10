@@ -4,6 +4,8 @@ import com.bfwg.security.TokenHelper;
 import com.bfwg.security.auth.RestAuthenticationEntryPoint;
 import com.bfwg.security.auth.TokenAuthenticationFilter;
 import com.bfwg.service.impl.CustomUserDetailsService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,13 +28,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Created by fan.jin on 2016-10-19.
- */
+
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity()
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
@@ -70,9 +70,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy( SessionCreationPolicy.STATELESS ).and()
                 .exceptionHandling().authenticationEntryPoint( restAuthenticationEntryPoint ).and()
                 .authorizeRequests()
+
                 .antMatchers(
                         HttpMethod.GET,
                         "/",
+                        "/console/*",
                         "/webjars/**",
                         "/*.html",
                         "/favicon.ico",
@@ -85,7 +87,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(new TokenAuthenticationFilter(tokenHelper, jwtUserDetailsService), BasicAuthenticationFilter.class);
 
         http.csrf().disable();
+        // add this line to use H2 web console
+        http.headers().frameOptions().disable();
     }
+
 
 
     @Override
@@ -93,11 +98,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // TokenAuthenticationFilter will ignore the below paths
         web.ignoring().antMatchers(
                 HttpMethod.POST,
-                "/auth/login"
+                "/auth/login",
+                "/console/*"
         );
         web.ignoring().antMatchers(
                 HttpMethod.GET,
                 "/",
+                "/console",
                 "/webjars/**",
                 "/*.html",
                 "/favicon.ico",
@@ -105,6 +112,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 "/**/*.css",
                 "/**/*.js"
             );
-
     }
 }

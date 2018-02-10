@@ -28,9 +28,7 @@ import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by fan.jin on 2017-05-10.
- */
+
 
 @RestController
 @RequestMapping( value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE )
