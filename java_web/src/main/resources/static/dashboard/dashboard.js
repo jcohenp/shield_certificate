@@ -15,31 +15,15 @@ function DashboardCtrl($scope, $rootScope, $http, isAuthenticated, authService) 
 	$scope.serverResponse = '';
 	$scope.responseBoxClass = '';
 
-	var setResponse = function(res, success) {
+	var setResponse = function(res) {
 		$rootScope.authenticated = isAuthenticated;
-		if (success) {
-			$scope.responseBoxClass = 'alert-success';
-		} else {
-			$scope.responseBoxClass = 'alert-danger';
-		}
 		$scope.serverResponse = res;
-		$scope.serverResponse.data = JSON.stringify(res.data, null, 2);
 	}
 
 	if ($rootScope.authenticated) {
-		authService.getUser()
+		authService.getAllUser()
 		.then(function(response) {
-			$scope.user = response.data;
-		});
-	}
-
-	$scope.getUserInfo = function() {
-		authService.getUser()
-		.then(function(response) {
-			setResponse(response, true);
-		})
-		.catch(function(response) {
-			setResponse(response, false);
+			$scope.users = response.data;
 		});
 	}
 

@@ -29,16 +29,16 @@ angular.module('myApp.services', [])
       }
   }
 
-  var getUser = function() {
+  var getAllUser = function() {
     return $http({
       headers: createAuthorizationTokenHeader(),
       method: 'GET',
-      url: 'api/whoami'
+      url: 'api/user/all'
     });
   };
 
   return {
-    getUser: getUser,
+    getAllUser: getAllUser,
     getJwtToken: getJwtToken,
     setJwtToken: setJwtToken,
     removeJwtToken: removeJwtToken,
