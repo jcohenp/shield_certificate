@@ -13,12 +13,11 @@ function DashboardCtrl($scope, $rootScope, $http, isAuthenticated, authService) 
 	$rootScope.authenticated = isAuthenticated;
 
 	$scope.serverResponse = '';
-	$scope.responseBoxClass = '';
 
 	var setResponse = function(res) {
 		$rootScope.authenticated = isAuthenticated;
 		$scope.serverResponse = res;
-	}
+	};
 
 	if ($rootScope.authenticated) {
 		authService.getAllUser()
@@ -40,6 +39,13 @@ function DashboardCtrl($scope, $rootScope, $http, isAuthenticated, authService) 
 			setResponse(response, false);
 		});
 	}
+
+	$scope.showModal = function(event) {
+        $("#DataCertificate").find("input#userName").val(event.currentTarget.attributes["data-userName"].value);&
+	};
+	$scope.CreateCertificate = function(event) {
+
+	};
 }
 DashboardCtrl.resolve = {
 	isAuthenticated : function($q, $http, AuthService) {
