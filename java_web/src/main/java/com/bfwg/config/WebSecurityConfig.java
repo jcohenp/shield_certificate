@@ -82,12 +82,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.css",
                         "/**/*.js"
                 ).permitAll()
-                .antMatchers("/auth/**").permitAll()
+                .antMatchers("/auth/**, /api/certificat/create_certificat").permitAll()
                 .anyRequest().authenticated().and()
                 .addFilterBefore(new TokenAuthenticationFilter(tokenHelper, jwtUserDetailsService), BasicAuthenticationFilter.class);
 
         http.csrf().disable();
-        // add this line to use H2 web console
+        // H2 web console
         http.headers().frameOptions().disable();
     }
 

@@ -6,15 +6,16 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.math.BigInteger;
 import java.sql.Timestamp;
 
 public class Certificat {
     @Id
     @Column(name = "serialNumber")
-    private Long serialNumber;
+    private BigInteger serialNumber;
 
     @Column(name = "version")
-    private String version;
+    private int version;
 
     @Column(name = "subject")
     private String subject;
@@ -29,27 +30,29 @@ public class Certificat {
     @Column(name = "key")
     private String key;
 
-    @Column(name = "validity")
-    private String validity;
-
     @Column(name = "issuer")
-    private boolean issuer;
+    private String issuer;
 
-
-    @Column(name = "algorithm")
-    private Timestamp algorithm;
     @Column(name = "signature")
-    private Timestamp signature;
+    private byte[] signature;
 
-    public void setSerialNumber(Long serialNumber) {
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    @Column(name = "data")
+    private String data;
+
+    public void setSerialNumber(BigInteger serialNumber) {
         this.serialNumber = serialNumber;
     }
 
-    public String getVersion() {
+    public int getVersion() {
         return version;
     }
 
-    public void setVersion(String version) {
+    public void setVersion(int version) {
         this.version = version;
     }
 
@@ -85,36 +88,31 @@ public class Certificat {
         this.key = key;
     }
 
-    public String getValidity() {
-        return validity;
-    }
-
-    public void setValidity(String validity) {
-        this.validity = validity;
-    }
-
-    public boolean isIssuer() {
+    public String isIssuer() {
         return issuer;
     }
 
-    public void setIssuer(boolean issuer) {
+    public void setIssuer(String issuer) {
         this.issuer = issuer;
     }
 
-
-    public Timestamp getAlgorithm() {
-        return algorithm;
-    }
-
-    public void setAlgorithm(Timestamp algorithm) {
-        this.algorithm = algorithm;
-    }
-
-    public Timestamp getSignature() {
+    public byte[] getSignature() {
         return signature;
     }
 
-    public void setSignature(Timestamp signature) {
+    public void setSignature(byte[] signature) {
         this.signature = signature;
+    }
+
+    public BigInteger getSerialNumber() {
+        return serialNumber;
+    }
+
+    public String getIssuer() {
+        return issuer;
+    }
+
+    public String getData() {
+        return data;
     }
 }

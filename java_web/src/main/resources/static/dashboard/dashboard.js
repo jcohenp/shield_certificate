@@ -8,7 +8,7 @@ angular.module('myApp.dashboard', ['ngRoute', 'ui.bootstrap'])
 		resolve: DashboardCtrl.resolve
   });
 }])
-.controller('CreateCertificateCtrl', function ($scope, $http) {
+.controller('CreateCertificateCtrl', function ($scope) {
 
 	// datePicker ANGULAR UI
     $scope.today = function() {
@@ -28,7 +28,6 @@ angular.module('myApp.dashboard', ['ngRoute', 'ui.bootstrap'])
     };
 
     $scope.open1 = function() {
-    	console.log("toto");
         $scope.popup1.opened = true;
     };
 
@@ -45,29 +44,30 @@ angular.module('myApp.dashboard', ['ngRoute', 'ui.bootstrap'])
         opened: false
     };
 
-    // SEND MODAL FOR CERTIFICATE CREATION
-
-
-    $scope.serverResponse = '';
-
-    var setResponse = function(res) {
-        $rootScope.authenticated = isAuthenticated;
-        $scope.serverResponse = res;
+    $scope.inlineOptions = {
+        customClass: getDayClass,
+        minDate: new Date(),
+        showWeeks: true
     };
 
-    $scope.CreateCertificate = function() {
-        $http({
-            headers: authService.createAuthorizationTokenHeader(),
-            method: 'POST',
-            url: 'api/certificat/create_certificat'
-        })
-            .then(function(res) {
-                setResponse(res, true);
-            })
-            .catch(function(response) {
-                setResponse(response, false);
-            });
-    };
+
+    function getDayClass(data) {
+        var date = data.date,
+            mode = data.mode;
+        if (mode === 'day') {
+            var dayToCheck = new Date(date).setHours(0,0,0,0);
+
+            for (var i = 0; i < $scope.events.length; i++) {
+                var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
+
+                if (dayToCheck === currentDay) {
+                    return $scope.events[i].status;
+                }
+            }
+        }
+
+        return '';
+    }
 
 
 });
@@ -106,6 +106,22 @@ function DashboardCtrl($scope, $rootScope, $http, isAuthenticated, authService) 
 	$scope.showModal = function(event) {
         $("#DataCertificate").find("input#userName").val(event.currentTarget.attributes["data-userName"].value);
 	};
+
+    $scope.CreateCertificate = function() {
+    	var date = $("input#datePicker").val();
+        $http({
+            headers: authService.createAuthorizationTokenHeader(),
+            method: 'POST',
+            url: 'api/certificat/create_certificat',
+			data: {date: date}
+        })
+            .success(function(res) {
+                console.log(res)
+            })
+            .catch(function(response) {
+                setResponse(response, false);
+            });
+    };
 }
 DashboardCtrl.resolve = {
 	isAuthenticated : function($q, $http, AuthService) {
