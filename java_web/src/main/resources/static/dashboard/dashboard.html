@@ -37,20 +37,9 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="userName" class="form-control-label">UserName</label>
-                            <input type="text" class="form-control" id="userName">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-control-label">Date validity</label>
-                            <p class="input-group">
-                                <input id="datePicker" type="text" class="form-control " uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions"  ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
-                                <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
-                                </span>
-                            </p>
-                        </div>
+                    <form ng-files="getTheFiles($files)">
+                        <label>Veuillez insérer votre certificat</label>
+                        <input type="file" name="nom" multiple/>
                     </form>
                 </div>
                 <div class="modal-footer">

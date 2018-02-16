@@ -8,69 +8,50 @@ angular.module('myApp.dashboard', ['ngRoute', 'ui.bootstrap'])
 		resolve: DashboardCtrl.resolve
   });
 }])
-.controller('CreateCertificateCtrl', function ($scope) {
 
-	// datePicker ANGULAR UI
-    $scope.today = function() {
-        $scope.dt = new Date();
-    };
-    $scope.today();
+.directive('ngFiles', ['$parse', function ($parse) {
 
-    $scope.clear = function() {
-        $scope.dt = null;
+    function fn_link(scope, element, attrs) {
+        var onChange = $parse(attrs.ngFiles);
+        element.on('change', function (event) {
+            onChange(scope, { $files: event.target.files });
+        });
     };
 
-    $scope.dateOptions = {
-        formatYear: 'yy',
-        maxDate: new Date(2020, 5, 22),
-        minDate: new Date(),
-        startingDay: 1
-    };
-
-    $scope.open1 = function() {
-        $scope.popup1.opened = true;
-    };
-
-
-    $scope.setDate = function(year, month, day) {
-        $scope.dt = new Date(year, month, day);
-    };
-
-    $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-    $scope.format = $scope.formats[0];
-    $scope.altInputFormats = ['M!/d!/yyyy'];
-
-    $scope.popup1 = {
-        opened: false
-    };
-
-    $scope.inlineOptions = {
-        customClass: getDayClass,
-        minDate: new Date(),
-        showWeeks: true
-    };
-
-
-    function getDayClass(data) {
-        var date = data.date,
-            mode = data.mode;
-        if (mode === 'day') {
-            var dayToCheck = new Date(date).setHours(0,0,0,0);
-
-            for (var i = 0; i < $scope.events.length; i++) {
-                var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
-
-                if (dayToCheck === currentDay) {
-                    return $scope.events[i].status;
-                }
-            }
-        }
-
-        return '';
+    return {
+        link: fn_link
     }
+} ])
+.controller('CreateCertificateCtrl', ["$scope", "$http", "AuthService", function ($scope, $http, authService) {
 
+    var formdata = new FormData();
+    $scope.getTheFiles = function ($files) {
+        angular.forEach($files, function (value, key) {
+            formdata.append(key, value);
+        });
+    };
 
-});
+    $scope.CreateCertificate = function() {
+
+        var request = {
+            method: 'POST',
+            url: '/api/certificat/create_certificat',
+            data: formdata,
+            headers :{
+                'Authorization': 'Bearer ' + authService.getJwtToken(),
+                'Content-Type': undefined
+            }
+        };
+
+        // SEND THE FILES.
+        $http(request)
+            .success(function (d) {
+                alert(d);
+            })
+            .error(function () {
+            });
+    };
+}]);
 
 function DashboardCtrl($scope, $rootScope, $http, isAuthenticated, authService) {
 	$rootScope.authenticated = isAuthenticated;
@@ -107,21 +88,6 @@ function DashboardCtrl($scope, $rootScope, $http, isAuthenticated, authService) 
         $("#DataCertificate").find("input#userName").val(event.currentTarget.attributes["data-userName"].value);
 	};
 
-    $scope.CreateCertificate = function() {
-    	var date = $("input#datePicker").val();
-        $http({
-            headers: authService.createAuthorizationTokenHeader(),
-            method: 'POST',
-            url: 'api/certificat/create_certificat',
-			data: {date: date}
-        })
-            .success(function(res) {
-                console.log(res)
-            })
-            .catch(function(response) {
-                setResponse(response, false);
-            });
-    };
 }
 DashboardCtrl.resolve = {
 	isAuthenticated : function($q, $http, AuthService) {
