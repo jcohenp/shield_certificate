@@ -27,10 +27,9 @@ public class CertificatController {
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseBody
     public void create_certificat(MultipartHttpServletRequest request, HttpServletResponse response) {
+        //openssl x509 -x509toreq -in certificate.crt -out CSR.csr -signkey privateKey.key
             Iterator<String> itr=request.getFileNames();
 
             MultipartFile file=request.getFile(itr.next());
-
-            String fileName=file.getOriginalFilename();
     }
 }
