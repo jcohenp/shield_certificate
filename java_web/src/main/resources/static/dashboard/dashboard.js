@@ -35,7 +35,7 @@ angular.module('myApp.dashboard', ['ngRoute', 'ui.bootstrap'])
 
         var request = {
             method: 'POST',
-            url: '/api/certificat/create_certificat',
+            url: '/api/user/create_certificat',
             data: formdata,
             headers :{
                 'Authorization': 'Bearer ' + authService.getJwtToken(),
