@@ -9,9 +9,12 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.multipart.support.StandardMultipartHttpServletRequest;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -56,17 +59,22 @@ public class UserController {
 
 
     @PostMapping("/user/create_certificat")
-    public void create_certificat(@RequestParam("file") MultipartFile file){
-        System.out.println();
-        //Iterator<String> itr = request.getFileNames();
-        //MultipartFile file = request.getFile(itr.next());
+    @PreAuthorize("hasRole('ADMIN')")
+    public void create_certificat(MultipartHttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        Iterator<String> itr = request.getFileNames();
+        MultipartFile file = request.getFile(itr.next());
 
-               /*
-        Process p;
-        String command="openssl x509 -x509toreq -in temp_cert/" + convFile.getName() + " -out Certificate_user/cert1.csr -signkey Certificate_authority/private_ca.key";
+        File convFile = new File(file.getOriginalFilename());
+        convFile.createNewFile();
+        FileOutputStream fos = new FileOutputStream("Certificate_user/" + convFile);
+        fos.write(file.getBytes());
+        fos.close();
+        //openssl x509 -req -in ../cert.csr -CA rootCA.pem -CAkey private_ca.key -CAcreateserial -out device.crt -days 500 -sha256
+
+        String command="openssl x509 -req -in Certificate_user/" + convFile + " -CA Certificate_authority/rootCA.pem -CAkey Certificate_authority/private_ca.key -CAcreateserial -out Certificate_user/cert1.csr -days 500 -sha256";
         Runtime r=Runtime.getRuntime();
-        p=r.exec(command);
-        */
+        r.exec(command);
+
     }
 }
 
