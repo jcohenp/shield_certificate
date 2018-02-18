@@ -1,46 +1,11 @@
 <!DOCTYPE html>
-<html>
-
-<head>
-    <base href="/">
-    <title>springboot-jwt-starter</title>
-    <link rel="stylesheet" href="webjars/bootstrap/3.3.7/css/bootstrap.css">
-    <style type="text/css">
-    [ng\:cloak], [ng-cloak], .ng-cloak {
-      display: none !important;
-    }
-    </style>
-</head>
-<body ng-app="myApp">
-  <div class="container" ng-controller="NavigationCtrl" ng-cloak class="ng-cloak">
-    <ul style="margin-bottom: 20px;" class="nav nav-pills" role="tablist">
-        <li ng-class="tabClass('/')"><a href="#/" ng-click="setSelectedTab('/')">Home</a></li>
-        <li ng-class="tabClass('/login')" ng-hide="authenticated"><a href="#/login" ng-click="setSelectedTab('/login')">Login</a></li>
-        <li ng-show="authenticated"><a href="" ng-click="logout()">logout</a></li>
-    </ul>
-    <div ng-view ></div>
-  </div>
-  <script src="webjars/jquery/2.1.1/jquery.js"></script>
-  <script src="webjars/bootstrap/3.3.7/js/bootstrap.js"></script>
-  <script src="webjars/angularjs/1.5.8/angular.js"></script>
-  <script src="webjars/angular-route/1.5.9/angular-route.js"></script>
-
-  <script src="app.js"></script>
-  <script src="dashboard/dashboard.js"></script>
-  <script src="login/login.js"></script>
-  <script src="services/auth.js"></script>
-
-  <!-- awesome icons -->
-  <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
-
-  <!-- ANGULAR UI -->
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-animate.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-sanitize.js"></script>
-  <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
-
-
-
-</body>
-
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>shieldcertificate</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="/dist/build.js"></script>
+  </body>
 </html>
