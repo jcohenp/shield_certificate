@@ -29,6 +29,9 @@ angular.module('myApp.dashboard', ['ngRoute', 'ui.bootstrap'])
         angular.forEach($files, function (value, key) {
             formdata.append(key, value);
         });
+      $("#modal").attr("data-userId").val(event.currentTarget.attributes["data-userName"].value);
+
+      formdata.append("userId", $scope.userId)
     };
 
     $scope.CreateCertificate = function() {
@@ -84,7 +87,7 @@ function DashboardCtrl($scope, $rootScope, $http, isAuthenticated, authService) 
 		});
 	}
 
-	$scope.showModal = function(event) {
+	$scope.showModal = function(event, userId) {
         $("#DataCertificate").find("input#userName").val(event.currentTarget.attributes["data-userName"].value);
 	};
 
