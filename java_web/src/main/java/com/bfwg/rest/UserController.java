@@ -1,6 +1,8 @@
 package com.bfwg.rest;
 
+import com.bfwg.model.Certificat;
 import com.bfwg.model.User;
+import com.bfwg.repository.CertificatRepository;
 import com.bfwg.service.UserService;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,6 +27,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private CertificatRepository certificatRepository;
 
     @RequestMapping( method = GET, value = "/user/{userId}" )
     @PreAuthorize("hasRole('ADMIN')")
@@ -69,7 +74,7 @@ public class UserController {
         obj.put("fileName", fileName);
         obj.put("userName", userName);
 
-
+        //TODO: use cert name
         String command2 = "openssl x509 -noout -text -in Certificate_user/cert_user_0.pem";
         Process proc = r.exec(command2);
         BufferedReader stdInput = new BufferedReader(new
@@ -88,11 +93,40 @@ public class UserController {
        // System.out.println("print " + str);
        // }
 
-
+        //System.out.println(test);
         String[] cert = test.split("\n");
-        for (String cur : cert) {
+        /*for (String cur : cert) {
              System.out.print(cur);
-        }
+        }*/
+
+        String[] tmp = cert[9].split(",");
+
+        Certificat certificat = new Certificat();
+        certificat.setDateValidity(cert[8]);
+        certificat.setValid(true);
+        certificat.setCreation(new Date());
+        certificat.setPathName(fileName);
+        certificat.setCountry(tmp[0].substring(tmp[0].indexOf("=") + 1));
+        certificat.setEmailAdress(tmp[5].split("/")[1].split("=")[1]);
+        certificat.setOrganizationName(tmp[3].substring(tmp[3].indexOf("=") + 1));
+        certificat.setOrganizationalUnitName(tmp[4].substring(tmp[4].indexOf("=") + 1));
+        certificat.setState(tmp[1].substring(tmp[1].indexOf("=") + 1));
+        certificat.setLocality(tmp[2].substring(tmp[2].indexOf("=") + 1));
+        certificat.setCommonName((tmp[5].substring(tmp[5].indexOf("=") + 1)).substring(0,
+                (tmp[5].substring(tmp[5].indexOf("=") + 1).indexOf("/"))));
+
+
+
+
+        certificatRepository.save(certificat);
+        //certificatRepository.save(certificat);
+        //certificatRepository.save(certificat);
+
+        /*for (Certificat cur : certificatRepository.findAll()) {
+            cur.DisplayCert(cur);
+        }*/
+
+        //System.out.println("test val " + cert[9]);
 
         return obj.toString();
     }
