@@ -32,18 +32,18 @@
 </head>
 <body ng-app="myApp">
 <div class="limiter" ng-controller="NavigationCtrl" ng-cloak class="ng-cloak">
-
-    <div class="container-login100" style="background-image: url('https://colorlib.com/etc/lf/Login_v3/images/bg-01.jpg);">
     <ul style="margin-bottom: 20px;" class="nav nav-pills" role="tablist">
         <li ng-class="tabClass('/')"><a href="#/" ng-click="setSelectedTab('/')">Home</a></li>
         <li ng-class="tabClass('/login')" ng-hide="authenticated"><a href="#/login" ng-click="setSelectedTab('/login')">Login</a>
         </li>
         <li ng-show="authenticated"><a href="" ng-click="logout()">logout</a></li>
     </ul>
+    <div class="container-login100" style="background-image: url('https://colorlib.com/etc/lf/Login_v3/images/bg-01.jpg);">
     <div ng-view></div>
     </div>
 </div>
 <script src="webjars/jquery/2.1.1/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="webjars/bootstrap/3.3.7/js/bootstrap.js"></script>
 <script src="webjars/angularjs/1.5.8/angular.js"></script>
 <script src="webjars/angular-route/1.5.9/angular-route.js"></script>
