@@ -70,18 +70,21 @@ public class UserController {
                    InputStreamReader(proc.getInputStream()));
         BufferedReader stdError = new BufferedReader(new
                     InputStreamReader(proc.getErrorStream()));
-        System.out.println("This io " + IOUtils.toString(stdInput));
+        //System.out.println("This io " + IOUtils.toString(stdInput));
+        String test = IOUtils.toString(stdInput);
 
         System.err.println(IOUtils.toString(stdError));
 
-        String str = IOUtils.toString(stdInput);
-        proc.waitFor();
-        String[] cert = IOUtils.toString(stdError).split("/");
+       // String str = IOUtils.toString(stdInput);
+        //proc.waitFor();
+       // String[] cert = IOUtils.toString(stdError).split("/");
         //for (String cur : str.split("=")) {
-        System.out.println("print " + str);
+       // System.out.println("print " + str);
        // }
-
-
+        String[] cert = test.split("\n");
+        for (String cur : cert) {
+             System.out.print(cur);
+        }
 
         return Collections.singletonMap("fileName", convFile.getName());
     }
