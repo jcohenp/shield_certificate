@@ -51,6 +51,8 @@ angular.module('myApp.dashboard', ['ngRoute', 'ui.bootstrap'])
             .success(function (d) {
               formdata.delete("userName");
               formdata.delete("idCert");
+              alert(d);
+                
               document.getElementById("uploadCaptureInputFile").value = "";
               $(".modal").modal('hide');
               $("#" + d.userName).append("<li>" + d.fileName + "</li>")
