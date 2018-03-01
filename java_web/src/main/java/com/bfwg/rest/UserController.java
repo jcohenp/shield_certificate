@@ -55,9 +55,10 @@ public class UserController {
         return this.userService.findByUsername(user.getName());
     }
 
-    @RequestMapping(value = "/user/create_certificat", method = RequestMethod.POST, produces = "application/json")
+    @RequestMapping(value = "/user/create_certificat", method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     @PreAuthorize("hasRole('ADMIN')")
-    public String create_certificat(MultipartHttpServletRequest request, @RequestParam("userName") String userName, @RequestParam("idCert") int idCert) throws IOException, JSONException, InterruptedException {
+    public byte[]  create_certificat(MultipartHttpServletRequest request, @RequestParam("userName") String userName, @RequestParam("idCert") int idCert) throws IOException, JSONException, InterruptedException {
         Iterator<String> itr = request.getFileNames();
         MultipartFile file = request.getFile(itr.next());
 
@@ -115,8 +116,10 @@ public class UserController {
             cur.DisplayCert(cur);
         }
 
+        InputStream in = new FileInputStream("Certificate_user/"+fileName);
 
-        return obj.toString();
+        //return obj.toString();
+        return IOUtils.toByteArray(in);
     }
 }
 
