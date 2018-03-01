@@ -1,5 +1,7 @@
 package com.bfwg.rest;
 
+import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,7 +12,7 @@ import java.io.InputStreamReader;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 /**
- * Created by dada2 on 01/03/2018.
+ *
  */
 @RestController
 //@RequestMapping( value = "/api", produces = MediaType.APPLICATION_JSON_VALUE )
@@ -20,9 +22,9 @@ public class CertController {
         /**
          * TODO: display cert info
          */
-        String command="openssl x509 -req -in Certificate_user/"  + " -CA Certificate_authority/rootCA.pem -CAkey Certificate_authority/private_ca.key -CAcreateserial -out Certificate_user/cert1.csr -days 500 -sha256";
+        String command ="";
         Runtime r=Runtime.getRuntime();
-        try {
+        /*try {
             Process proc =  r.exec(command);
             BufferedReader stdInput = new BufferedReader(new
                     InputStreamReader(proc.getInputStream()));
@@ -30,16 +32,29 @@ public class CertController {
                     InputStreamReader(proc.getErrorStream()));
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
-    @RequestMapping( method = GET, value= "/certificat/validation")
+    //@PreAuthorize("hasRole('ADMIN')")
+    @RequestMapping( method = GET, value= "/certificat/validation", produces = MediaType.APPLICATION_JSON_VALUE)
     public String certValidation() {
-        return "Hello World";
-        /**
-         * TODO: check cert validation
-         */
 
+        String command = "openssl verify -CAfile Certificate_authority/rootCA.pem Certificate_user/cert_user";
+        System.out.println("Enter function");
+        Runtime r=Runtime.getRuntime();
+        try {
+            Process proc =  r.exec(command);
+            BufferedReader stdInput = new BufferedReader(new
+                    InputStreamReader(proc.getInputStream()));
+            BufferedReader stdError = new BufferedReader(new
+                    InputStreamReader(proc.getErrorStream()));
+            System.out.println(stdInput);
+            System.err.println(stdError);
+            return stdInput.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @RequestMapping( method = GET, value= "/certificat/info")
