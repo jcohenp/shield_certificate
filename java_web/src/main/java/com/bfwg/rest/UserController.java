@@ -122,9 +122,9 @@ public class UserController {
         //certificatRepository.save(certificat);
         //certificatRepository.save(certificat);
 
-        /*for (Certificat cur : certificatRepository.findAll()) {
+        for (Certificat cur : certificatRepository.findAll()) {
             cur.DisplayCert(cur);
-        }*/
+        }
 
         //System.out.println("test val " + cert[9]);
 
