@@ -30,8 +30,9 @@ angular.module('myApp.dashboard', ['ngRoute', 'ui.bootstrap'])
             formdata.append(key, value);
         });
       var userName = $("#modal").attr("data-userName");
-
+      var id_cert = $("#cert").children().length
       formdata.append("userName", userName);
+      formdata.append("idCert", id_cert);
     };
 
     $scope.CreateCertificate = function() {
@@ -49,7 +50,9 @@ angular.module('myApp.dashboard', ['ngRoute', 'ui.bootstrap'])
         // SEND THE FILES.
         $http(request)
             .success(function (d) {
-                alert(d);
+
+              $(".modal").modal('hide');
+              $("#cert").append("<li>" + d.fileName + "</li>")
             })
             .error(function () {
             });
