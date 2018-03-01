@@ -74,8 +74,7 @@ public class UserController {
         obj.put("fileName", fileName);
         obj.put("userName", userName);
 
-        //TODO: use cert name
-        String command2 = "openssl x509 -noout -text -in Certificate_user/cert_user_0.pem";
+        String command2 = "openssl x509 -noout -text -in Certificate_user/"+fileName;
         Process proc = r.exec(command2);
         BufferedReader stdInput = new BufferedReader(new
                    InputStreamReader(proc.getInputStream()));
@@ -85,13 +84,6 @@ public class UserController {
         String test = IOUtils.toString(stdInput);
 
         System.err.println(IOUtils.toString(stdError));
-
-       // String str = IOUtils.toString(stdInput);
-        //proc.waitFor();
-       // String[] cert = IOUtils.toString(stdError).split("/");
-        //for (String cur : str.split("=")) {
-       // System.out.println("print " + str);
-       // }
 
         //System.out.println(test);
         String[] cert = test.split("\n");
@@ -119,8 +111,6 @@ public class UserController {
 
 
         certificatRepository.save(certificat);
-        //certificatRepository.save(certificat);
-        //certificatRepository.save(certificat);
 
         for (Certificat cur : certificatRepository.findAll()) {
             cur.DisplayCert(cur);

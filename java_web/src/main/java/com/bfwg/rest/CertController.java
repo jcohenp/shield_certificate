@@ -13,7 +13,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 
 @RestController
@@ -49,7 +51,7 @@ public class CertController {
         return null;
     }
 
-    @RequestMapping( method = GET, value= "/certificat/update")
+    @RequestMapping( method = PUT, value= "/certificat/update")
     public void certUpdate() {
         /**
          * TODO: update cert
@@ -57,11 +59,15 @@ public class CertController {
 
     }
 
-    @RequestMapping( method = GET, value= "/certificat/revoke")
-    public void certRevoke() {
+    @RequestMapping( method = DELETE, value= "/certificat/revoke")
+    public String certRevoke(@RequestParam("cert_name") String cert_name) {
         /**
          * TODO: revoke cert
          */
+        Certificat certificat =certificatRepository.findFirstByPathName(cert_name+".pem");
+        certificat.setValid(false);
+        certificatRepository.save(certificat);
+        return "{\"successRevoke\":1}";
     }
 
 }
