@@ -69,10 +69,14 @@ public class UserController {
         String fileName = "cert_" + userName + "_" + idCert + ".pem";
         String command="openssl x509 -req -in Certificate_user/" + convFile + " -CA Certificate_authority/rootCA.pem -CAkey Certificate_authority/private_ca.key -CAcreateserial -out Certificate_user/" + fileName + " -days 500 -sha256";
         Runtime r=Runtime.getRuntime();
-        r.exec(command);
+        Process  p1 = r.exec(command);
         JSONObject obj = new JSONObject();
         obj.put("fileName", fileName);
         obj.put("userName", userName);
+
+
+        p1.waitFor();
+        Thread.sleep(1000);
 
         String command2 = "openssl x509 -noout -text -in Certificate_user/"+fileName;
         Process proc = r.exec(command2);
@@ -83,7 +87,7 @@ public class UserController {
         //System.out.println("This io " + IOUtils.toString(stdInput));
         String test = IOUtils.toString(stdInput);
 
-        System.err.println(IOUtils.toString(stdError));
+        //System.err.println(IOUtils.toString(stdError));
 
         //System.out.println(test);
         String[] cert = test.split("\n");
