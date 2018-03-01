@@ -2,6 +2,7 @@ package com.bfwg.rest;
 
 import com.bfwg.model.User;
 import com.bfwg.service.UserService;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -9,14 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.security.Principal;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
@@ -54,7 +50,7 @@ public class UserController {
 
     @RequestMapping(value = "/user/create_certificat", method = RequestMethod.POST, produces = "application/json")
     @PreAuthorize("hasRole('ADMIN')")
-    public Map create_certificat(MultipartHttpServletRequest request, @RequestParam("userName") String userName, @RequestParam("idCert") int idCert) throws IOException {
+    public Map create_certificat(MultipartHttpServletRequest request, @RequestParam("userName") String userName, @RequestParam("idCert") int idCert) throws IOException, InterruptedException {
         Iterator<String> itr = request.getFileNames();
         MultipartFile file = request.getFile(itr.next());
 
@@ -66,6 +62,26 @@ public class UserController {
         String command="openssl x509 -req -in Certificate_user/" + convFile + " -CA Certificate_authority/rootCA.pem -CAkey Certificate_authority/private_ca.key -CAcreateserial -out Certificate_user/cert_" + userName + "_" + idCert + ".pem -days 500 -sha256";
         Runtime r=Runtime.getRuntime();
         r.exec(command);
+
+
+        String command2 = "openssl x509 -noout -text -in Certificate_user/cert_user_0.pem";
+        Process proc = r.exec(command2);
+        BufferedReader stdInput = new BufferedReader(new
+                   InputStreamReader(proc.getInputStream()));
+        BufferedReader stdError = new BufferedReader(new
+                    InputStreamReader(proc.getErrorStream()));
+        System.out.println("This io " + IOUtils.toString(stdInput));
+
+        System.err.println(IOUtils.toString(stdError));
+
+        String str = IOUtils.toString(stdInput);
+        proc.waitFor();
+        String[] cert = IOUtils.toString(stdError).split("/");
+        //for (String cur : str.split("=")) {
+        System.out.println("print " + str);
+       // }
+
+
 
         return Collections.singletonMap("fileName", convFile.getName());
     }
