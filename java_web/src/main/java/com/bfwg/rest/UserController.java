@@ -2,28 +2,23 @@ package com.bfwg.rest;
 
 import com.bfwg.model.User;
 import com.bfwg.service.UserService;
-import org.apache.catalina.core.ApplicationPart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.MultipartRequest;
-import org.springframework.web.multipart.support.StandardMultipartHttpServletRequest;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 
 @RestController
@@ -57,10 +52,9 @@ public class UserController {
         return this.userService.findByUsername(user.getName());
     }
 
-
-    @PostMapping("/user/create_certificat")
+    @RequestMapping(value = "/user/create_certificat", method = RequestMethod.POST, produces = "application/json")
     @PreAuthorize("hasRole('ADMIN')")
-    public void create_certificat(MultipartHttpServletRequest request, @RequestParam("userName") String userName) throws IOException {
+    public Map create_certificat(MultipartHttpServletRequest request, @RequestParam("userName") String userName, @RequestParam("idCert") int idCert) throws IOException {
         Iterator<String> itr = request.getFileNames();
         MultipartFile file = request.getFile(itr.next());
 
@@ -69,9 +63,11 @@ public class UserController {
         FileOutputStream fos = new FileOutputStream("Certificate_user/" + convFile);
         fos.write(file.getBytes());
         fos.close();
-        String command="openssl x509 -req -in Certificate_user/" + convFile + " -CA Certificate_authority/rootCA.pem -CAkey Certificate_authority/private_ca.key -CAcreateserial -out Certificate_user/cert_" + userName + " -days 500 -sha256";
+        String command="openssl x509 -req -in Certificate_user/" + convFile + " -CA Certificate_authority/rootCA.pem -CAkey Certificate_authority/private_ca.key -CAcreateserial -out Certificate_user/cert_" + userName + "_" + idCert + ".pem -days 500 -sha256";
         Runtime r=Runtime.getRuntime();
         r.exec(command);
+
+        return Collections.singletonMap("fileName", convFile.getName());
     }
 }
 
