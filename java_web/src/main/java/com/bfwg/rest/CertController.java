@@ -1,5 +1,8 @@
 package com.bfwg.rest;
 
+import com.bfwg.model.Certificat;
+import com.bfwg.repository.CertificatRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,35 +15,23 @@ import java.io.InputStreamReader;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
-/**
- *
- */
+
 @RestController
-//@RequestMapping( value = "/api", produces = MediaType.APPLICATION_JSON_VALUE )
 public class CertController {
+
+
+    @Autowired
+    private CertificatRepository certificatRepository;
+
     @RequestMapping( method = GET, value= "/certificat/certInfo")
-    public void certInformation(){
-        /**
-         * TODO: display cert info
-         */
-        String command ="";
-        Runtime r=Runtime.getRuntime();
-        /*try {
-            Process proc =  r.exec(command);
-            BufferedReader stdInput = new BufferedReader(new
-                    InputStreamReader(proc.getInputStream()));
-            BufferedReader stdError = new BufferedReader(new
-                    InputStreamReader(proc.getErrorStream()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
+    public Certificat certInformation(@RequestParam("cert_name") String cert_name){
+         Certificat certificat = certificatRepository.findFirstByPathName(cert_name+".pem");
+         return certificat;
     }
 
-    //@PreAuthorize("hasRole('ADMIN')")
     @RequestMapping( method = GET, value= "/certificat/validation", produces = MediaType.APPLICATION_JSON_VALUE)
     public String certValidation(@RequestParam("cert_name") String cert_name) {
-
-        String command = "openssl verify -CAfile Certificate_authority/rootCA.pem Certificate_user/" + cert_name;
+        String command = "openssl verify -CAfile Certificate_authority/rootCA.pem Certificate_user/" + cert_name+".pem";
         System.out.println("Enter function");
         Runtime r=Runtime.getRuntime();
         try {
@@ -58,7 +49,7 @@ public class CertController {
         return null;
     }
 
-    @RequestMapping( method = GET, value= "/certificat/info")
+    @RequestMapping( method = GET, value= "/certificat/update")
     public void certUpdate() {
         /**
          * TODO: update cert
