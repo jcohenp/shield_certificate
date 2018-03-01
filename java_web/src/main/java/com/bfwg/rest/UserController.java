@@ -84,16 +84,11 @@ public class UserController {
                    InputStreamReader(proc.getInputStream()));
         BufferedReader stdError = new BufferedReader(new
                     InputStreamReader(proc.getErrorStream()));
-        //System.out.println("This io " + IOUtils.toString(stdInput));
         String test = IOUtils.toString(stdInput);
 
-        //System.err.println(IOUtils.toString(stdError));
 
-        //System.out.println(test);
         String[] cert = test.split("\n");
-        /*for (String cur : cert) {
-             System.out.print(cur);
-        }*/
+
 
         String[] tmp = cert[9].split(",");
 
@@ -120,7 +115,6 @@ public class UserController {
             cur.DisplayCert(cur);
         }
 
-        //System.out.println("test val " + cert[9]);
 
         return obj.toString();
     }
