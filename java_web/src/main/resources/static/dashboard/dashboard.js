@@ -29,9 +29,9 @@ angular.module('myApp.dashboard', ['ngRoute', 'ui.bootstrap'])
         angular.forEach($files, function (value, key) {
             formdata.append(key, value);
         });
-      $("#modal").attr("data-userId").val(event.currentTarget.attributes["data-userName"].value);
+      var userName = $("#modal").attr("data-userName");
 
-      formdata.append("userId", $scope.userId)
+      formdata.append("userName", userName);
     };
 
     $scope.CreateCertificate = function() {

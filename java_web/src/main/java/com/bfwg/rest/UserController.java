@@ -60,7 +60,7 @@ public class UserController {
 
     @PostMapping("/user/create_certificat")
     @PreAuthorize("hasRole('ADMIN')")
-    public void create_certificat(MultipartHttpServletRequest request, @RequestParam("userId") String userId) throws IOException {
+    public void create_certificat(MultipartHttpServletRequest request, @RequestParam("userName") String userName) throws IOException {
         Iterator<String> itr = request.getFileNames();
         MultipartFile file = request.getFile(itr.next());
 
@@ -69,10 +69,9 @@ public class UserController {
         FileOutputStream fos = new FileOutputStream("Certificate_user/" + convFile);
         fos.write(file.getBytes());
         fos.close();
-        String command="openssl x509 -req -in Certificate_user/" + convFile + " -CA Certificate_authority/rootCA.pem -CAkey Certificate_authority/private_ca.key -CAcreateserial -out Certificate_user/cert1.csr -days 500 -sha256";
+        String command="openssl x509 -req -in Certificate_user/" + convFile + " -CA Certificate_authority/rootCA.pem -CAkey Certificate_authority/private_ca.key -CAcreateserial -out Certificate_user/cert_" + userName + " -days 500 -sha256";
         Runtime r=Runtime.getRuntime();
         r.exec(command);
-
     }
 }
 
