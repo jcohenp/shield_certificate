@@ -29,10 +29,9 @@ angular.module('myApp.dashboard', ['ngRoute', 'ui.bootstrap'])
         angular.forEach($files, function (value, key) {
             formdata.append(key, value);
         });
-      var userName = $("#modal").attr("data-userName");
-      var id_cert = $("#cert").children().length
+      var userName = $("#DataCertificate").attr("data-userName");
       formdata.append("userName", userName);
-      formdata.append("idCert", id_cert);
+      formdata.append("idCert", $("#DataCertificate").attr("data-certId"));
     };
 
     $scope.CreateCertificate = function() {
@@ -50,9 +49,11 @@ angular.module('myApp.dashboard', ['ngRoute', 'ui.bootstrap'])
         // SEND THE FILES.
         $http(request)
             .success(function (d) {
-
+              formdata.delete("userName");
+              formdata.delete("idCert");
+              document.getElementById("uploadCaptureInputFile").value = "";
               $(".modal").modal('hide');
-              $("#cert").append("<li>" + d.fileName + "</li>")
+              $("#" + d.userName).append("<li>" + d.fileName + "</li>")
             })
             .error(function () {
             });
@@ -90,8 +91,10 @@ function DashboardCtrl($scope, $rootScope, $http, isAuthenticated, authService) 
 		});
 	}
 
-	$scope.showModal = function(event, userId) {
-        $("#DataCertificate").find("input#userName").val(event.currentTarget.attributes["data-userName"].value);
+	$scope.showModal = function(event) {
+        $("#DataCertificate").attr("data-userName", event.currentTarget.attributes["data-userName"].value);
+        $("#DataCertificate").attr("data-certId", event.currentTarget.parentNode.firstElementChild.childElementCount);
+
 	};
 
 }

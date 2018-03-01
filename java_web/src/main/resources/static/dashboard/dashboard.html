@@ -20,7 +20,7 @@
                 <td>{{user.username}}</td>
                 <td>{{user.firstName}}</td>
                 <td>{{user.lastName}}</td>
-                <td><ul id="cert"></ul><span id="modal" ng-click="showModal($event)" data-userName={{user.username}} data-toggle="modal" data-target="#DataCertificate"> Ajout d'un certificat <i style="cursor: pointer;" class="fa fa-plus text-primary"></i></span></td>
+                <td><ul id={{user.username}}></ul><span id="modal" ng-click="showModal($event)" data-userName={{user.username}} data-toggle="modal" data-target="#DataCertificate"> Ajout d'un certificat <i style="cursor: pointer;" class="fa fa-plus text-primary"></i></span></td>
             </tr>
         </tbody>
     </table>
@@ -39,7 +39,7 @@
                 <div class="modal-body">
                     <form ng-files="getTheFiles($files)">
                         <label>Veuillez insérer votre certificat</label>
-                        <input type="file" name="file"/>
+                        <input id="uploadCaptureInputFile" type="file" name="file"/>
                     </form>
                 </div>
                 <div class="modal-footer">

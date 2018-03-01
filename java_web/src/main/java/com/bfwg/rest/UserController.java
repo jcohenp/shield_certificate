@@ -2,7 +2,11 @@ package com.bfwg.rest;
 
 import com.bfwg.model.User;
 import com.bfwg.service.UserService;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jackson.JsonObjectDeserializer;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -54,7 +58,7 @@ public class UserController {
 
     @RequestMapping(value = "/user/create_certificat", method = RequestMethod.POST, produces = "application/json")
     @PreAuthorize("hasRole('ADMIN')")
-    public Map create_certificat(MultipartHttpServletRequest request, @RequestParam("userName") String userName, @RequestParam("idCert") int idCert) throws IOException {
+    public String create_certificat(MultipartHttpServletRequest request, @RequestParam("userName") String userName, @RequestParam("idCert") int idCert) throws IOException, JSONException {
         Iterator<String> itr = request.getFileNames();
         MultipartFile file = request.getFile(itr.next());
 
@@ -63,11 +67,15 @@ public class UserController {
         FileOutputStream fos = new FileOutputStream("Certificate_user/" + convFile);
         fos.write(file.getBytes());
         fos.close();
-        String command="openssl x509 -req -in Certificate_user/" + convFile + " -CA Certificate_authority/rootCA.pem -CAkey Certificate_authority/private_ca.key -CAcreateserial -out Certificate_user/cert_" + userName + "_" + idCert + ".pem -days 500 -sha256";
+        String fileName = "cert_" + userName + "_" + idCert + ".pem";
+        String command="openssl x509 -req -in Certificate_user/" + convFile + " -CA Certificate_authority/rootCA.pem -CAkey Certificate_authority/private_ca.key -CAcreateserial -out Certificate_user/" + fileName + " -days 500 -sha256";
         Runtime r=Runtime.getRuntime();
         r.exec(command);
+        JSONObject obj = new JSONObject();
+        obj.put("fileName", fileName);
+        obj.put("userName", userName);
 
-        return Collections.singletonMap("fileName", convFile.getName());
+        return obj.toString();
     }
 }
 
