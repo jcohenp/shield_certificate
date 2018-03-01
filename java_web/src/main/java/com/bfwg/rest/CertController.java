@@ -3,6 +3,7 @@ package com.bfwg.rest;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.BufferedReader;
@@ -37,9 +38,9 @@ public class CertController {
 
     //@PreAuthorize("hasRole('ADMIN')")
     @RequestMapping( method = GET, value= "/certificat/validation", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String certValidation() {
+    public String certValidation(@RequestParam("cert_name") String cert_name) {
 
-        String command = "openssl verify -CAfile Certificate_authority/rootCA.pem Certificate_user/cert_user";
+        String command = "openssl verify -CAfile Certificate_authority/rootCA.pem Certificate_user/" + cert_name;
         System.out.println("Enter function");
         Runtime r=Runtime.getRuntime();
         try {
@@ -50,7 +51,7 @@ public class CertController {
                     InputStreamReader(proc.getErrorStream()));
             System.out.println(stdInput);
             System.err.println(stdError);
-            return stdInput.toString();
+            return stdInput.readLine();
         } catch (IOException e) {
             e.printStackTrace();
         }

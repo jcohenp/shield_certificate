@@ -2,25 +2,19 @@ package com.bfwg.rest;
 
 import com.bfwg.model.User;
 import com.bfwg.service.UserService;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.jackson.JsonObjectDeserializer;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.security.Principal;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
@@ -58,7 +52,7 @@ public class UserController {
 
     @RequestMapping(value = "/user/create_certificat", method = RequestMethod.POST, produces = "application/json")
     @PreAuthorize("hasRole('ADMIN')")
-    public String create_certificat(MultipartHttpServletRequest request, @RequestParam("userName") String userName, @RequestParam("idCert") int idCert) throws IOException, JSONException {
+    public String create_certificat(MultipartHttpServletRequest request, @RequestParam("userName") String userName, @RequestParam("idCert") int idCert) throws IOException, JSONException, InterruptedException {
         Iterator<String> itr = request.getFileNames();
         MultipartFile file = request.getFile(itr.next());
 
@@ -75,7 +69,27 @@ public class UserController {
         obj.put("fileName", fileName);
         obj.put("userName", userName);
 
+
+        String command2 = "openssl x509 -noout -text -in Certificate_user/cert_user_0.pem";
+        Process proc = r.exec(command2);
+        BufferedReader stdInput = new BufferedReader(new
+                   InputStreamReader(proc.getInputStream()));
+        BufferedReader stdError = new BufferedReader(new
+                    InputStreamReader(proc.getErrorStream()));
+        System.out.println("This io " + IOUtils.toString(stdInput));
+
+        System.err.println(IOUtils.toString(stdError));
+
+        String str = IOUtils.toString(stdInput);
+        proc.waitFor();
+        String[] cert = IOUtils.toString(stdError).split("/");
+        //for (String cur : str.split("=")) {
+        System.out.println("print " + str);
+       // }
         return obj.toString();
+
+
+
     }
 }
 
