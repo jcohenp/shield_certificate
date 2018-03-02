@@ -4,11 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.math.BigInteger;
+import java.sql.Clob;
 import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
-@Table(name="CERTIFICAT")
+@Table(name = "CERTIFICAT")
 public class Certificat {
     public Long getId() {
         return id;
@@ -108,7 +109,7 @@ public class Certificat {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "path")
@@ -119,6 +120,18 @@ public class Certificat {
 
     @Column(name = "country")
     private String country;
+
+    public Clob getValuecertificate() {
+        return valuecertificate;
+    }
+
+    public void setValuecertificate(Clob valuecertificate) {
+        this.valuecertificate = valuecertificate;
+    }
+
+    @JsonIgnore
+    @Column(name = "valuecertificate")
+    private Clob valuecertificate;
 
     @Column(name = "state")
     private String state;
@@ -144,6 +157,15 @@ public class Certificat {
     @Column(name = "valid")
     private Boolean valid;
 
+    public String getCert() {
+        return cert;
+    }
+
+    public void setCert(String cert) {
+        this.cert = cert;
+    }
+
+    private String cert;
 
     /*
     @Column(name = "version")
@@ -260,6 +282,6 @@ public class Certificat {
         System.out.println("Organization " + certificat.getOrganizationName());
         System.out.println("OrganizationName " + certificat.getOrganizationalUnitName());
         System.out.println("CN " + certificat.getCommonName());
-        System.out.println("Email "+ certificat.getEmailAdress());
+        System.out.println("Email " + certificat.getEmailAdress());
     }
 }
