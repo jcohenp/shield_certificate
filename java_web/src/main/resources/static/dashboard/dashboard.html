@@ -2,7 +2,6 @@
     <p>please authenticated on login page</p>
 </div>
 <div ng-show="authenticated">
-
     <div class="wrapper">
         <div class="sidebar">
             <div class="sidebar-wrapper">
@@ -38,7 +37,7 @@
                                     <td>{{user.firstName}}</td>
                                     <td>{{user.lastName}}</td>
                                     <td>
-                                        <ul id={{user.username}}></ul>
+                                        <button type="button" class="btn btn-primary btn-fill btn-sm">Voir</button>
                                         <span id="modal" ng-click="showModal($event)" data-userName={{user.username}}
                                               data-toggle="modal" data-target="#DataCertificate"> Ajout d'un certificat <i
                                                 style="cursor: pointer;" class="fa fa-plus text-primary"></i></span>
