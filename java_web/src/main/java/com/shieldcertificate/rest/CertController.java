@@ -98,6 +98,7 @@ public class CertController {
         certificat.setValid(true);
         certificat.setCreation(new Date());
         certificat.setPathName(fileName);
+        certificat.setPath_client_cert(convFile.toString());
         certificat.setCountry(tmp[0].substring(tmp[0].indexOf("=") + 1));
         certificat.setEmailAdress(tmp[5].split("/")[1].split("=")[1]);
         certificat.setOrganizationName(tmp[3].substring(tmp[3].indexOf("=") + 1));
@@ -127,8 +128,6 @@ public class CertController {
     @RequestMapping(method = GET, value = "/certificat/getAllCert")
     public List<Certificat> getAllCert() throws SQLException, IOException {
 
-     //   Certificat certificat = new Certificat();
-     //   certificat.setValid();
         List<Certificat> certificat = certificatRepository.findAll();
         for (Certificat cur : certificat) {
             InputStream in = cur.getValuecertificate().getAsciiStream();
@@ -150,8 +149,7 @@ public class CertController {
                     InputStreamReader(proc.getInputStream()));
             BufferedReader stdError = new BufferedReader(new
                     InputStreamReader(proc.getErrorStream()));
-            //System.out.println(stdInput);
-            //System.err.println(stdError);
+
             String out = IOUtils.toString(stdInput);
             if (out.contains("OK") && certificatRepository.
                     findFirstByPathName(cert_name + ".pem").getValid())
@@ -167,12 +165,11 @@ public class CertController {
 
 
         Certificat old_certificat = certificatRepository.findFirstByPathName(cert_name);
-        old_certificat.setValid(false);
-        certificatRepository.save(old_certificat);
+
 
         int randomNum = ThreadLocalRandom.current().nextInt(0, 10000 + 1);
         String fileName = "cert_" + randomNum + ".csr";
-        String command = "openssl x509 -req -in import_cert/" + old_certificat.getPath_client_cert() + " -CA Certificate_authority/rootCA.pem -CAkey Certificate_authority/private_ca.key -CAcreateserial -out Certificate_user/" + fileName + " -days 700 -sha256";
+        String command = "openssl x509 -req -in import_cert/" + old_certificat.getPath_client_cert() + " -CA Certificate_authority/rootCA.pem -CAkey Certificate_authority/private_ca.key -CAcreateserial -out Certificate_user/" + fileName + " -days 500 -sha256";
         Runtime r = Runtime.getRuntime();
         Process p1 = r.exec(command);
 
@@ -198,6 +195,7 @@ public class CertController {
         certificat.setValid(true);
         certificat.setCreation(new Date());
         certificat.setPathName(fileName);
+        certificat.setPath_client_cert(old_certificat.getPath_client_cert());
         certificat.setCountry(tmp[0].substring(tmp[0].indexOf("=") + 1));
         certificat.setEmailAdress(tmp[6].split("=")[1]);
         certificat.setOrganizationName(tmp[3].substring(tmp[3].indexOf("=") + 1));
@@ -213,6 +211,7 @@ public class CertController {
         certificat.setValid(true);
         certificat.setCreation(new Date());
         certificat.setPathName(fileName);
+        certificat.setPath_client_cert(old_certificat.getPath_client_cert());
         certificat.setCountry(tmp[0].substring(tmp[0].indexOf("=") + 1));
         certificat.setEmailAdress(tmp[5].split("/")[1].split("=")[1]);
         certificat.setOrganizationName(tmp[3].substring(tmp[3].indexOf("=") + 1));
@@ -234,6 +233,9 @@ public class CertController {
 
         for (Certificat cur : certificatRepository.findAll())
             cur.DisplayCert(cur);
+
+        old_certificat.setValid(false);
+        certificatRepository.save(old_certificat);
 
         return IOUtils.toByteArray(in);
     }
