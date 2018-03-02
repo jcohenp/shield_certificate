@@ -42,14 +42,14 @@
                                     <th scope="row">{{cerficate.id}}</th>
                                     <td>{{cerficate.path}}</td>
                                     <td>{{cerficate.creation | date:"MM/dd/yyyy 'at' h:mma"}}</td>
-                                    <td>{{cerficate.datevalidity}}</td>
+                                    <td>{{cerficate.dateValidity}}</td>
                                     <td>
                                         <button type="button" class="btn btn-primary btn-fill btn-sm"
                                                 ng-click="openViewCertificateModal(cerficate)"
                                                 data-toggle="modal" data-target="#ViewDataCertificate">Voir
                                         </button>
-                                        <button type="button" class="btn btn-warning btn-fill btn-sm">Modifier</button>
-                                        <button type="button" class="btn btn-danger btn-fill btn-sm"> Effacer</button>
+                                        <button type="button" class="btn btn-success btn-fill btn-sm">Renouveller</button>
+                                        <button type="button" class="btn btn-danger btn-fill btn-sm"> Revoquer</button>
                                         <!--
                                         <span id="modal" ng-click="showModal($event)" data-userName={{user.username}}
                                               data-toggle="modal" data-target="#DataCertificate"> Ajout d'un certificat <i
