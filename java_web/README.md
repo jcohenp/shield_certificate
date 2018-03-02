@@ -7,82 +7,52 @@
     |_|                 |___/                        |__/
 ```
 
-[![npm](https://img.shields.io/badge/demo-online-ed1c46.svg)](http://jwt.fanjin.io/)
-[![Build Status](https://travis-ci.org/bfwg/springboot-jwt-starter.svg?branch=master)](https://travis-ci.org/bfwg/springboot-jwt-starter)
-[![License MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/bfwg/springboot-jwt-starter/blob/master/LICENSE)
-
 > A Springboot token-based security starter kit featuring [AngularJS](https://angularjs.org/) and [Springboot](https://projects.spring.io/spring-boot/) ([JSON Web Token](https://jwt.io/))
 
-> If you're looking for using Angular 4 for frontend implementation, please checkout [angular-spring-starter](https://github.com/bfwg/angular-spring-starter), a fullstack starter kit featuring [Angular 4](https://angular.io), [Router](https://angular.io/docs/ts/latest/guide/router.html), [Forms](https://angular.io/docs/ts/latest/guide/forms.html),
-[Http](https://angular.io/docs/ts/latest/guide/server-communication.html),
-[Services](https://gist.github.com/gdi2290/634101fec1671ee12b3e#_follow_@AngularClass_on_twitter),
-[Spring boot](https://projects.spring.io/spring-boot/),
-[Json Web Token](https://jwt.io/)
+### Demarrage Rapide
 
-Sponsor
--------
-
-<table>
-  <tr>
-    <td>
-      <img style="height: 42px; width: 42px;" alt="Auth0 Logo" src="https://user-images.githubusercontent.com/83319/31722733-de95bbde-b3ea-11e7-96bf-4f4e8f915588.png">
-    </td>
-    <td>
-      If you want to quickly add token based authentication to your apps, feel free to check out Auth0's SDKs and free plan at <a href="https://auth0.com/overview">auth0.com/overview</a>.
-    </td>
-  </tr>
-</table>
-
-
-### [Live Demo](http://jwt.fanjin.io)
-<p align="center">
-    <img width="800" alt="Springboot JWT Starter" src="https://cloud.githubusercontent.com/assets/12819525/24693784/23c8af14-1994-11e7-9984-ebf612f740ec.png">
-</p>
-
-> Authentication is the most common scenario for using JWT. Once the user is logged in, each subsequent request will include the JWT, allowing the user to access routes, services, and resources that are permitted with that token. Single Sign On is a feature that widely uses JWT nowadays, because of its small overhead and its ability to be easily used across different domains.
-
-> -- <cite>Auth0</cite>
-
-
-### Quick start
-**Make sure you have Maven and Java 1.7 or greater**
+**Verifiez que vous avez la commande Maven et Java 1.7 ou plus récente**
 
 ```bash
-# clone our repo
-# --depth 1 removes all but one .git commit history
-git clone --depth 1 https://github.com/bfwg/springboot-jwt-starter.git
+# Cloner ce Repertoire
+git clone https://gitlab.com/codecritics/shied-certificate.git
+# Aller dans le dossier source.
+cd shied-certificate
 
-# change directory to our repo
-cd springboot-jwt-starter
-
-# install the repo with mvn
+# Installer le projet avec Maven
 mvn install
 
-# start the server
+# Lancer le serveur
 mvn spring-boot:run
 
-# the app will be running on port 8080
-# there are two built-in user accounts to demonstrate the differing levels of access to the endpoints:
-# - User - user:123
+# L'Application Web se lancera sur le port 8080
+# Par defaut pour pourrez vous connecter en utilisant les identifiants ci-dessous:
 # - Admin - admin:123
 ```
 
 
-### File Structure
+### Architecture du Dossier
 ```
-springboot-jwt-starter/
+shied-certificate/
  ├──src/                                                        * our source files
  │   ├──main
  │   │   ├──java.com.shieldcertificate
+ │   │   │   ├──common
+ │   │   │   │config
+ │   │   │   │   ├──DeviceProvider.java
+ │   │   │   │   └──TimeProvider.java  
  │   │   │   ├──config
  │   │   │   │   └──WebSecurityConfig.java                      * config file for filter, custom userSerivce etc.
  │   │   │   ├──model
+ │   │   │   │   ├──Certificate.java
  │   │   │   │   ├──Authority.java
  │   │   │   │   ├──UserTokenState.java                         * JWT model
  │   │   │   │   └──User.java                                   * our main User model.
  │   │   │   ├──repository                                      * repositories folder for accessing database
+ │   │   │   │   ├──CertificateRepository.java
  │   │   │   │   └──UserRepository.java
  │   │   │   ├──rest                                            * rest endpoint folder
+ │   │   │   │   ├──CertController.java
  │   │   │   │   ├──AuthenticationController.java               * auth related REST controller, refresh token endpoint etc.
  │   │   │   │   └──UserController.java                         * REST controller to handle User related requests
  │   │   │   ├──security                                        * Security related folder(JWT, filters)
@@ -106,9 +76,8 @@ springboot-jwt-starter/
  └──pom.xml                                                     * what maven uses to manage it's dependencies
 ```
 # Table of Contents
-* [File Structure](#file-structure)
+* [Architecture du Dossier](#file-structure)
 * [Configuration](#configuration)
-* [JSON Web Token](#json-web-token)
 
 ### Configuration
 - **WebSecurityConfig.java**: The server-side authentication configurations.
