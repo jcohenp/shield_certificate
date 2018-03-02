@@ -1,5 +1,6 @@
 package com.bfwg.rest;
 
+import java.util.concurrent.ThreadLocalRandom;
 import com.bfwg.model.Certificat;
 import com.bfwg.model.User;
 import com.bfwg.repository.CertificatRepository;
@@ -70,7 +71,8 @@ public class UserController {
         FileOutputStream fos = new FileOutputStream("Certificate_user/" + convFile);
         fos.write(file.getBytes());
         fos.close();
-        String fileName = "cert_" + userName + "_" + idCert + ".pem";
+        int randomNum = ThreadLocalRandom.current().nextInt(0, 10000 + 1);
+        String fileName = "cert_" + randomNum + ".pem";
         String command = "openssl x509 -req -in Certificate_user/" + convFile + " -CA Certificate_authority/rootCA.pem -CAkey Certificate_authority/private_ca.key -CAcreateserial -out Certificate_user/" + fileName + " -days 500 -sha256";
         Runtime r = Runtime.getRuntime();
         Process p1 = r.exec(command);
