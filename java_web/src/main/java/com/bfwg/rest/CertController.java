@@ -82,7 +82,7 @@ public class CertController {
     @RequestMapping(method = DELETE, value = "/certificat/revoke")
     public String certRevoke(@RequestParam("cert_name") String cert_name) {
 
-        Certificat certificat = certificatRepository.findFirstByPathName(cert_name + ".pem");
+        Certificat certificat = certificatRepository.findFirstByPathName(cert_name);
         certificat.setValid(false);
         certificatRepository.save(certificat);
         return "{\"successRevoke\":1}";

@@ -71,7 +71,6 @@ function DashboardCtrl($scope, $rootScope, $http, isAuthenticated, authService) 
     $rootScope.authenticated = isAuthenticated;
     $scope.selectedCertificate = null;
     $scope.serverResponse = '';
-
     var setResponse = function (res) {
         $rootScope.authenticated = isAuthenticated;
         $scope.serverResponse = res;
@@ -116,6 +115,32 @@ function DashboardCtrl($scope, $rootScope, $http, isAuthenticated, authService) 
     }
     $scope.openViewCertificateModal = function (certitiface) {
         $scope.selectedCertificate = certitiface;
+    };
+
+    $scope.revokeCertificateModal= function(certificate) {
+        $http({
+            headers: authService.createAuthorizationTokenHeader(),
+            method: 'DELETE',
+            url: '/certificat/revoke?cert_name='+certificate.path,
+        })
+            .then(function (res) {
+                setResponse(res, true);
+                swal({
+                    title: "Bien joué!",
+                    text: "Certficat révoqué avec succès",
+                    icon: "success",
+                    button: "Ok",
+                });
+            })
+            .catch(function (response) {
+                setResponse(response, false);
+                swal({
+                    title: "Attention!",
+                    text: "Il y'a eu une erreur avec la revocation du Certificat",
+                    icon: "danger",
+                    button: "Ok",
+                });
+            });
     };
     $scope.showModal = function (event) {
         $("#DataCertificate").attr("data-userName", event.currentTarget.attributes["data-userName"].value);
