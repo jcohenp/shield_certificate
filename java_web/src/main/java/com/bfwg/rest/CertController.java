@@ -10,9 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.sql.SQLException;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
@@ -34,11 +33,16 @@ public class CertController {
     }
 
     @RequestMapping(method = GET, value = "/certificat/getAllCert")
-    public List<Certificat> getAllCert() {
+    public List<Certificat> getAllCert() throws SQLException, IOException {
 
      //   Certificat certificat = new Certificat();
      //   certificat.setValid();
         List<Certificat> certificat = certificatRepository.findAll();
+        InputStream in = certificat.get(0).getValuecertificate().getAsciiStream();
+        StringWriter w = new StringWriter();
+        IOUtils.copy(in,w);
+        String certficateAsString = w.toString();
+        certificat.get(0).setCert(certficateAsString);
         return certificat;
     }
 
