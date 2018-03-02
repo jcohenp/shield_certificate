@@ -1,5 +1,5 @@
 # README shield certificate
-![alt text](https://gitlab.com/codecritics/shied-certificate/raw/create_certificate/java_web/src/main/resources/static/assets/images/logo.png = 100x)
+![alt text](https://gitlab.com/codecritics/shied-certificate/raw/create_certificate/java_web/src/main/resources/static/assets/images/logo.png)
 
 ## But du projet
 Créer une application web permettant de délivrer des certificats signés par une autorité de certification
