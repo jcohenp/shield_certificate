@@ -1,13 +1,6 @@
-```
-                _             _                 _       _          _         _             _
- ___ _ __  _ __(_)_ __   __ _| |__   ___   ___ | |_    (_)_      _| |_   ___| |_ __ _ _ __| |_ ___ _ __
-/ __| '_ \| '__| | '_ \ / _` | '_ \ / _ \ / _ \| __|   | \ \ /\ / / __| / __| __/ _` | '__| __/ _ \ '__|
-\__ \ |_) | |  | | | | | (_| | |_) | (_) | (_) | |_    | |\ V  V /| |_  \__ \ || (_| | |  | ||  __/ |
-|___/ .__/|_|  |_|_| |_|\__, |_.__/ \___/ \___/ \__|  _/ | \_/\_/  \__| |___/\__\__,_|_|   \__\___|_|
-    |_|                 |___/                        |__/
-```
+![alt text](https://gitlab.com/codecritics/shied-certificate/raw/create_certificate/java_web/src/main/resources/static/assets/images/logo.png)
 
-> A Springboot token-based security starter kit featuring [AngularJS](https://angularjs.org/) and [Springboot](https://projects.spring.io/spring-boot/) ([JSON Web Token](https://jwt.io/))
+> Fait avec [Springboot](https://projects.spring.io/spring-boot/)  \[Authentification basé sur les token\]  ([JSON Web Token](https://jwt.io/) et [AngularJS](https://angularjs.org/) 
 
 ### Demarrage Rapide
 
@@ -75,15 +68,14 @@ shied-certificate/
  │   └──test                                                    * Junit test folder
  └──pom.xml                                                     * what maven uses to manage it's dependencies
 ```
-# Table of Contents
+# Sommaire
 * [Architecture du Dossier](#file-structure)
 * [Configuration](#configuration)
 
 ### Configuration
-- **WebSecurityConfig.java**: The server-side authentication configurations.
-- **application.yml**: Application level properties i.e the token expire time, token secret etc. You can find a reference of all application properties [here](http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html).
-- **JWT token TTL**: JWT Tokens are configured to expire after 10 minutes, you can get a new token by signing in again.
-- **Using a different database**: This Starter kit is using an embedded H2 database that is automatically configured by Spring Boot. If you want to connect to another database you have to specify the connection in the *application.yml* in the resource directory. Here is an example for a MySQL DB:
+- **WebSecurityConfig.java**: L'Authentification orienté Serveur basé sur les Tokens.
+- **application.yml**: Les propriétés de l'Application (la gestion du temps de validité des tokens, le secret du token ect..). Vous trouverez la référence de toutes les propriétés de l'Application ici. [here](http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html).
+- **JWT token TTL**: Les JWT Tokens sont paramétrés pour expirer tous les 10 minutes. Un nouveau token est fourni à chaque authentification.
 
 ```
 spring:
@@ -98,15 +90,13 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
 ```
 
-*Hint: For other databases like MySQL sequences don't work for ID generation. So you have to change the GenerationType in the entity beans to 'AUTO' or 'IDENTITY'.*
 
 ### JSON Web Token
 > JSON Web Tokens are an open, industry standard RFC 7519 method for representing claims securely between two parties.
 for more info, checkout https://jwt.io/
 
 ### Contributing
-I'll accept pretty much everything so feel free to open a Pull-Request
-
+Ce projet a été réalisé dans un cadre académique, aussi toute contribution est allégrement acceptée.
 
 This project is inspried by
 - [Cerberus](https://github.com/brahalla/Cerberus)
