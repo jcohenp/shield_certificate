@@ -19,8 +19,8 @@ config(['$locationProvider', '$routeProvider', "$httpProvider", function($locati
     $scope.logout = function() {
       authService.removeJwtToken();
       $rootScope.authenticated = false;
-      $location.path("#/login");
-      $rootScope.selectedTab = "/login";
+      $location.path("/login");
+      $rootScope.selectedTab = "/";
     }
 
     $scope.setSelectedTab = function(tab) {
@@ -36,11 +36,11 @@ config(['$locationProvider', '$routeProvider', "$httpProvider", function($locati
     }
 
     if ($rootScope.authenticated) {
-      $location.path('/');
-      $rootScope.selectedTab = '/';
+      $location.path('/#');
+      $rootScope.selectedTab = '/#';
       return;
     }
-    else {
+    else if(!$rootScope.authenticated) {
         $location.path('/login');
     }
   }

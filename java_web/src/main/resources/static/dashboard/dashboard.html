@@ -20,6 +20,11 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
+                            <button id="modal" type="button" class="btn btn-success" ng-click="showModal($event)" data-userName={{user.username}}
+                                    data-toggle="modal" data-target="#DataCertificate">Ajouter un Certificat</button>
+                            <br>
+                            <br>
+                            <br>
                             <table class="table table-striped">
                                 <thead>
                                 <tr>
@@ -38,9 +43,12 @@
                                     <td>{{user.lastName}}</td>
                                     <td>
                                         <button type="button" class="btn btn-primary btn-fill btn-sm">Voir</button>
+                                        <button type="button" class="btn btn-danger btn-fill btn-sm"> Effacer</button>
+                                        <!--
                                         <span id="modal" ng-click="showModal($event)" data-userName={{user.username}}
                                               data-toggle="modal" data-target="#DataCertificate"> Ajout d'un certificat <i
                                                 style="cursor: pointer;" class="fa fa-plus text-primary"></i></span>
+                                                !-->
                                     </td>
                                 </tr>
                                 </tbody>
@@ -49,17 +57,16 @@
                     </div>
                 </div>
             </div>
-            <footer class="footer">
-                <div class="container">
-                    <nav>
-                        <p class="copyright text-center txt1">
-                            ©  EPITA
-                        </p>
-                    </nav>
-                </div>
-            </footer>
         </div>
-
+        <footer class="footer">
+            <div class="container">
+                <nav>
+                    <p class="copyright text-center txt1">
+                        © Shield Certificate
+                    </p>
+                </nav>
+            </div>
+        </footer>
     </div>
 
     <!-- Modal for add certificate -->
