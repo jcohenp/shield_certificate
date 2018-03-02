@@ -38,11 +38,14 @@ public class CertController {
      //   Certificat certificat = new Certificat();
      //   certificat.setValid();
         List<Certificat> certificat = certificatRepository.findAll();
-        InputStream in = certificat.get(0).getValuecertificate().getAsciiStream();
-        StringWriter w = new StringWriter();
-        IOUtils.copy(in,w);
-        String certficateAsString = w.toString();
-        certificat.get(0).setCert(certficateAsString);
+        for (Certificat cur : certificat) {
+            InputStream in = cur.getValuecertificate().getAsciiStream();
+            StringWriter w = new StringWriter();
+            IOUtils.copy(in,w);
+            String certficateAsString = w.toString();
+            cur.setCert(certficateAsString);
+        }
+
         return certificat;
     }
 

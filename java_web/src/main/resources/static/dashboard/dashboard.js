@@ -23,7 +23,7 @@ angular.module('myApp.dashboard', ['ngRoute', 'ui.bootstrap'])
     }
 } ])
 .controller('CreateCertificateCtrl', ["$scope", "$http", "AuthService", function ($scope, $http, authService) {
-
+    $scope.newCertificate = null;
     var formdata = new FormData();
     $scope.getTheFiles = function ($files) {
         angular.forEach($files, function (value, key) {
@@ -51,8 +51,14 @@ angular.module('myApp.dashboard', ['ngRoute', 'ui.bootstrap'])
             .success(function (d) {
               formdata.delete("userName");
               formdata.delete("idCert");
-              alert(d);
-                
+            //  alert(d);
+                swal({
+                    title: "Bien joué!",
+                    text: "Certficat crée avec succès!",
+                    icon: "success",
+                    button: "Ok",
+                });
+                $scope.newCertificate = d;
               document.getElementById("uploadCaptureInputFile").value = "";
               $(".modal").modal('hide');
               $("#" + d.userName).append("<li>" + d.fileName + "</li>")
