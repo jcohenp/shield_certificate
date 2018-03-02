@@ -36,11 +36,11 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr ng-repeat="user in users">
-                                    <th scope="row">{{user.id}}</th>
-                                    <td>{{user.username}}</td>
-                                    <td>{{user.firstName}}</td>
-                                    <td>{{user.lastName}}</td>
+                                <tr ng-repeat="cerficate in certificates">
+                                    <th scope="row">{{cerficate.id}}</th>
+                                    <td>{{cerficate.path}}</td>
+                                    <td>{{cerficate.creation | date:"MM/dd/yyyy 'at' h:mma"}}</td>
+                                    <td>{{cerficate.datevalidity}}</td>
                                     <td>
                                         <button type="button" class="btn btn-primary btn-fill btn-sm">Voir</button>
                                         <button type="button" class="btn btn-danger btn-fill btn-sm"> Effacer</button>
