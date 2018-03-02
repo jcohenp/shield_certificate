@@ -44,14 +44,19 @@
                                     <td>{{cerficate.path}}</td>
                                     <td>{{cerficate.creation | date:"MM/dd/yyyy 'at' h:mma"}}</td>
                                     <td>{{cerficate.dateValidity}}</td>
-                                    <td> <a class="txt1" ng-class="{'badge': 'badge', ' badge-info':' badge-info'}">{{cerficate.valid == true ? "Valide" : "Non Valide"}}</a></td>
+                                    <td><a class="txt1" ng-class="{'badge': 'badge', ' badge-info':' badge-info'}">{{cerficate.valid
+                                        == true ? "Valide" : "Non Valide"}}</a></td>
                                     <td>
                                         <button type="button" class="btn btn-primary btn-fill btn-sm"
                                                 ng-click="openViewCertificateModal(cerficate)"
                                                 data-toggle="modal" data-target="#ViewDataCertificate">Voir
                                         </button>
-                                        <button type="button" class="btn btn-success btn-fill btn-sm">Renouveller</button>
-                                        <button type="button" class="btn btn-danger btn-fill btn-sm"> Revoquer</button>
+                                        <button type="button" class="btn btn-success btn-fill btn-sm">Renouveller
+                                        </button>
+                                        <button type="button" class="btn btn-danger btn-fill btn-sm"
+                                                ng-click="revokeCertificateModal(cerficate)" data-toggle="modal"
+                                               > Revoquer
+                                        </button>
                                         <!--
                                         <span id="modal" ng-click="showModal($event)" data-userName={{user.username}}
                                               data-toggle="modal" data-target="#DataCertificate"> Ajout d'un certificat <i
