@@ -43,6 +43,7 @@
                                     <td>{{cerficate.path}}</td>
                                     <td>{{cerficate.creation | date:"MM/dd/yyyy 'at' h:mma"}}</td>
                                     <td>{{cerficate.dateValidity}}</td>
+                                    <td> <a class="txt1" ng-class="{'badge': 'badge', ' badge-info':' badge-info'}">{{cerficate.valid == true ? "Valide" : "Non Valide"}}</a></td>
                                     <td>
                                         <button type="button" class="btn btn-primary btn-fill btn-sm"
                                                 ng-click="openViewCertificateModal(cerficate)"
