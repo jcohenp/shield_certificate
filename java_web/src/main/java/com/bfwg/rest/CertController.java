@@ -72,10 +72,13 @@ public class CertController {
     }
 
     @RequestMapping(method = PUT, value = "/certificat/update")
-    public void certUpdate() {
+    public void certUpdate(@RequestParam("cert_name") String cert_name) {
         /**
          * TODO: update cert
          */
+        Certificat certificat = certificatRepository.findFirstByPathName(cert_name);
+        certificat.setValid(false);
+        certificatRepository.save(certificat);
 
     }
 
