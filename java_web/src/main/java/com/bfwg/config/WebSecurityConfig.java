@@ -80,6 +80,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/favicon.ico",
                         "/**/*.html",
                         "/**/*.css",
+                        "/**/*.png",
                         "/**/*.js"
                 ).permitAll()
                 .antMatchers("/auth/**").permitAll()
