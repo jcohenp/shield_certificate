@@ -14,8 +14,8 @@ public interface CertificatRepository extends JpaRepository<Certificat, Long> {
     //@Query("select * from Certificat")
     //List<Certificat> findAll();
 
-    @Query("select c from Certificat c where c.pathName = :pathName")
-    Certificat findFirstByPathName(@Param("pathName") String pathName);
+    @Query("select c from Certificat c where c.path = :path")
+    Certificat findFirstByPathName(@Param("path") String path);
 
 
 }

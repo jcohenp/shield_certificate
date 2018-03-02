@@ -35,6 +35,9 @@ public class CertController {
 
     @RequestMapping(method = GET, value = "/certificat/getAllCert")
     public List<Certificat> getAllCert() {
+
+     //   Certificat certificat = new Certificat();
+     //   certificat.setValid();
         List<Certificat> certificat = certificatRepository.findAll();
         return certificat;
     }

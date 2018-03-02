@@ -1,47 +1,57 @@
 angular.module('myApp.services', [])
-.factory('AuthService', function($http) {
-	var user = null;
-	var TOKEN_KEY = 'jwtToken';
+    .factory('AuthService', function ($http) {
+        var user = null;
+        var TOKEN_KEY = 'jwtToken';
 
-  var getJwtToken = function() {
-    return localStorage.getItem(TOKEN_KEY);
-  };
+        var getJwtToken = function () {
+            return localStorage.getItem(TOKEN_KEY);
+        };
 
-  var setJwtToken = function(token) {
-      localStorage.setItem(TOKEN_KEY, token);
-  };
+        var setJwtToken = function (token) {
+            localStorage.setItem(TOKEN_KEY, token);
+        };
 
-  var removeJwtToken = function() {
-      localStorage.removeItem(TOKEN_KEY);
-  };
+        var removeJwtToken = function () {
+            localStorage.removeItem(TOKEN_KEY);
+        };
 
-  var createAuthorizationTokenHeader = function() {
-      var token = getJwtToken();
-      if (token) {
-          return {
-            "Authorization": "Bearer " + token,
-            'Content-Type': 'application/json'
-          };
-      } else {
-          return {
-            'Content-Type': 'application/json'
-          };
-      }
-  }
+        var createAuthorizationTokenHeader = function () {
+            var token = getJwtToken();
+            if (token) {
+                return {
+                    "Authorization": "Bearer " + token,
+                    'Content-Type': 'application/json'
+                };
+            } else {
+                return {
+                    'Content-Type': 'application/json'
+                };
+            }
+        }
 
-  var getAllUser = function() {
-    return $http({
-      headers: createAuthorizationTokenHeader(),
-      method: 'GET',
-      url: 'api/user/all'
+        var getAllUser = function () {
+            return $http({
+                headers: createAuthorizationTokenHeader(),
+                method: 'GET',
+                url: 'api/user/all'
+            });
+        };
+
+        var getAllCertificates = function () {
+            return $http({
+                headers: createAuthorizationTokenHeader(),
+                method: 'GET',
+                url: 'certificat/getAllCert'
+            });
+        };
+
+
+        return {
+            getAllUser: getAllUser,
+            getAllCertificates: getAllCertificates,
+            getJwtToken: getJwtToken,
+            setJwtToken: setJwtToken,
+            removeJwtToken: removeJwtToken,
+            createAuthorizationTokenHeader: createAuthorizationTokenHeader
+        };
     });
-  };
-
-  return {
-    getAllUser: getAllUser,
-    getJwtToken: getJwtToken,
-    setJwtToken: setJwtToken,
-    removeJwtToken: removeJwtToken,
-    createAuthorizationTokenHeader: createAuthorizationTokenHeader
-  };
-});

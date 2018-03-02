@@ -77,6 +77,9 @@ function DashboardCtrl($scope, $rootScope, $http, isAuthenticated, authService) 
 		.then(function(response) {
 			$scope.users = response.data;
 		});
+		authService.getAllCertificates().then(function (response) {
+		    $scope.certificates = response.data;
+        })
 	}
 
 	$scope.getAllUserInfo = function() {
@@ -92,6 +95,20 @@ function DashboardCtrl($scope, $rootScope, $http, isAuthenticated, authService) 
 			setResponse(response, false);
 		});
 	}
+
+    $scope.getAllCertificates = function() {
+        $http({
+            headers: authService.createAuthorizationTokenHeader(),
+            method: 'GET',
+            url: '/certificat/getAllCert'
+        })
+            .then(function(res) {
+                setResponse(res, true);
+            })
+            .catch(function(response) {
+                setResponse(response, false);
+            });
+    }
 
 	$scope.showModal = function(event) {
         $("#DataCertificate").attr("data-userName", event.currentTarget.attributes["data-userName"].value);

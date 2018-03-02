@@ -18,12 +18,12 @@ public class Certificat {
         this.id = id;
     }
 
-    public String getPathName() {
-        return pathName;
+    public String getPath() {
+        return path;
     }
 
-    public void setPathName(String pathName) {
-        this.pathName = pathName;
+    public void setPathName(String path) {
+        this.path = path;
     }
 
     public Date getCreation() {
@@ -59,43 +59,43 @@ public class Certificat {
     }
 
     public String getOrganizationName() {
-        return organizationName;
+        return organizationname;
     }
 
-    public void setOrganizationName(String organizationName) {
-        this.organizationName = organizationName;
+    public void setOrganizationName(String organizationname) {
+        this.organizationname = organizationname;
     }
 
     public String getOrganizationalUnitName() {
-        return organizationalUnitName;
+        return organizationalunitname;
     }
 
-    public void setOrganizationalUnitName(String organizationalUnitName) {
-        this.organizationalUnitName = organizationalUnitName;
+    public void setOrganizationalUnitName(String organizationalunitname) {
+        this.organizationalunitname = organizationalunitname;
     }
 
     public String getCommonName() {
-        return commonName;
+        return commonname;
     }
 
     public void setCommonName(String commonName) {
-        this.commonName = commonName;
+        this.commonname = commonname;
     }
 
     public String getEmailAdress() {
-        return emailAdress;
+        return emailadress;
     }
 
-    public void setEmailAdress(String emailAdress) {
-        this.emailAdress = emailAdress;
+    public void setEmailAdress(String emailadress) {
+        this.emailadress = emailadress;
     }
 
     public String getDateValidity() {
-        return dateValidity;
+        return datevalidity;
     }
 
     public void setDateValidity(String dateValidity) {
-        this.dateValidity = dateValidity;
+        this.datevalidity = datevalidity;
     }
 
     public Boolean getValid() {
@@ -111,8 +111,8 @@ public class Certificat {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "pathName")
-    private String pathName;
+    @Column(name = "path")
+    private String path;
 
     @Column(name = "creation")
     private Date creation;
@@ -126,20 +126,20 @@ public class Certificat {
     @Column(name = "locality")
     private String locality;
 
-    @Column(name = "organizationName")
-    private String organizationName;
+    @Column(name = "organizationname")
+    private String organizationname;
 
-    @Column(name = "organizationalUnitName")
-    private String organizationalUnitName;
+    @Column(name = "organizationalunitname")
+    private String organizationalunitname;
 
-    @Column(name = "commonName")
-    private String commonName;
+    @Column(name = "commonname")
+    private String commonname;
 
-    @Column(name = "emailAdress")
-    private String emailAdress;
+    @Column(name = "emailadress")
+    private String emailadress;
 
-    @Column(name = "dateValidity")
-    private String dateValidity;
+    @Column(name = "datevalidity")
+    private String datevalidity;
 
     @Column(name = "valid")
     private Boolean valid;
@@ -251,7 +251,7 @@ public class Certificat {
 
     public void DisplayCert(Certificat certificat) {
         System.out.println("Id " + certificat.getId());
-        System.out.println("NamePath " + certificat.getPathName());
+        System.out.println("Pa " + certificat.getPath());
         System.out.println("Date " + certificat.getDateValidity());
         System.out.println("Creation " + certificat.getCreation());
         System.out.println("Country " + certificat.getCountry());
