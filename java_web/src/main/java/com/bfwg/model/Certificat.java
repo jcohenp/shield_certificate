@@ -79,7 +79,7 @@ public class Certificat {
         return commonname;
     }
 
-    public void setCommonName(String commonName) {
+    public void setCommonName(String commonname) {
         this.commonname = commonname;
     }
 
@@ -96,7 +96,7 @@ public class Certificat {
     }
 
     public void setDateValidity(String dateValidity) {
-        this.datevalidity = datevalidity;
+        this.datevalidity = dateValidity;
     }
 
     public Boolean getValid() {
