@@ -37,7 +37,7 @@ angular.module('myApp.dashboard', ['ngRoute', 'ui.bootstrap'])
         $scope.CreateCertificate = function () {
             var request = {
                 method: 'POST',
-                url: '/api/user/create_certificat',
+                url: '/certificat/create_certificat',
                 data: formdata,
                 headers: {
                     'Authorization': 'Bearer ' + authService.getJwtToken(),
@@ -115,6 +115,32 @@ function DashboardCtrl($scope, $rootScope, $http, isAuthenticated, authService) 
     }
     $scope.openViewCertificateModal = function (certitiface) {
         $scope.selectedCertificate = certitiface;
+    };
+
+    $scope.updateCertificate = function(certificate) {
+        $http({
+            headers: authService.createAuthorizationTokenHeader(),
+            method: 'PUT',
+            url: '/certificat/update?cert_name='+certificate.path
+        })
+            .then(function (res) {
+                setResponse(res, true);
+                swal({
+                    title: "Bien joué!",
+                    text: "Certficat renouveler avec succès",
+                    icon: "success",
+                    button: "Ok",
+                });
+            })
+            .catch(function (response) {
+                setResponse(response, false);
+                swal({
+                    title: "Attention!",
+                    text: "Il y'a eu une erreur avec le renouvellement du Certificat",
+                    icon: "danger",
+                    button: "Ok",
+                });
+            });
     };
 
     $scope.revokeCertificateModal= function(certificate) {
